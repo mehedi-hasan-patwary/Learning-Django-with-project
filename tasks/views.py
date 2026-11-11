@@ -1,20 +1,26 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+
 # Create your views here.
 
-def home(request):
-    return HttpResponse('welcome to rask managemnt project')
+def manager_dashboard(request):
+    return render(request, "dashboard/manager-dashboard.html")
 
-def contact(request):
-    return HttpResponse('<h1>This is contact page</h1>')
 
-def show_task(request):
-    return HttpResponse("This is our task page")
+def user_dashboard(request):
+    return render(request, "dashboard/user-dashboard.html")
 
-def show_specific_task(request,id):
-    print(f'id --> {id}')
-    print(f'id type {type(id)}')
-    return HttpResponse('This is specific task page')
+def test_2(request):
+    return render(request,'test_2.html')
 
-def dashboard(request,id):
-    return HttpResponse("This is dashboard")
+def test_3(request):
+    names = ["Mahmud", "Ahamed", "John", "Mr. X"]
+    count = 0
+    for name in names:
+        count += 1
+    context = {
+        "names": names,
+        "age": 23,
+        "count": count
+    }
+    return render(request, 'test_3.html', context)
