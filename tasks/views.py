@@ -24,3 +24,7 @@ def test_3(request):
         "count": count
     }
     return render(request, 'test_3.html', context)
+
+
+def create_task(request):
+    return render(request,'task_form.html')
