@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
-    'tasks'
+    'tasks',
+     "debug_toolbar"
     
 ]
 
@@ -50,6 +51,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware"
+]
+
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
 ]
 
 ROOT_URLCONF = 'task_management.urls'
@@ -75,12 +83,28 @@ WSGI_APPLICATION = 'task_management.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
+#For sqlite
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+#For Postgress
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'task_management_3',
+        'USER': 'postgres',
+        'PASSWORD': 'pass',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
+
+
 
 
 # Password validation
@@ -118,7 +142,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATICFILES_DIRS=[
+    BASE_DIR/ 'static'
+]
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
