@@ -1,7 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from tasks.forms import TaskForm,TaskModelForm
-from tasks.models import Employee,Task
+from tasks.models import Employee, Task, TaskDetail, Project
+# from tasks.models import *
+from datetime import date
+from django.db.models import Q,Count,Max,Min,Avg
+
 
 # Create your views here.
 
@@ -43,25 +47,36 @@ def create_task_2(request):
             return render(request, 'task_4.html', {"form": form, "message": "task added successfully"})
 
 
-            
-            # data = form.cleaned_data
-            # title = data.get('title')
-            # description = data.get('description')
-            # due_date = data.get('due_date')
-            # assigned_to = data.get('assigned_to')  # list [1,3]
-
-            # task = Task.objects.create(
-            #     title=title, description=description, due_date=due_date)
-
-            # # Assign employee to tasks
-            # for emp_id in assigned_to:
-            #     employee = Employee.objects.get(id=emp_id)
-            #     task.assigned_to.add(employee)
-
-            # return HttpResponse("Task Added successfully")
 
 
 
     context={"form":form}
     return render(request,'task_4.html',context)
-  
+
+
+def view_task(request):
+    #getting all data
+    tasks=Task.objects.all()
+   #for a specific task
+    task_3=Task.objects.get(id=1)
+
+    first_task=Task.objects.first()
+    pending_task_1=Task.objects.filter(status='PENDING')
+    return render(request, "show_task.html", {"tasks": tasks,"task3":task_3,"first_task":first_task,"task_4":pending_task_1})
+
+
+# def view_task_3(request):
+#     pending_task_1=Task.objects.filter(status='PENDING')
+#     return render(request, "show_task.html", {"tasks_4":pending_task_1})
+
+
+#filter
+def view_task_2(request):
+    pending_task=Task.objects.filter(status='PENDING')
+    return render(request, "show_task_2.html", {"tasks_5":pending_task})
+
+
+def view_task_3(request):
+    """Show the task that contain word paper"""
+    tasks=Task.objects.filter(title_icontains="paper")
+    return render(request, "show_task_2.html", {"tasks_6":tasks})
